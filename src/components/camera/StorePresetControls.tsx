@@ -1,11 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 import * as THREE from 'three';
 import { cameraPresetsSlice } from "../../store/slices/cameras";
 import { useDispatch } from "react-redux";
 
 interface Props {
-  ref: RefObject<any>;
+  ref: RefObject<OrbitControls>;
 }
 
 export const StorePresetControls = ({ ref }: Props) => {

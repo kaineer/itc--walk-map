@@ -1,25 +1,20 @@
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
 import { useEffect, useRef, type RefObject } from 'react';
-import * as THREE from 'three';
 
 interface Props {
-  ref: RefObject<any>;
-  height: number; // Фиксированная высота (1.8 м)
+  ref: RefObject<OrbitControls>;
+  height?: number;
 }
 
 export const FixedHeightCamera = ({ ref, height = 1.8 }: Props) => {
-  const controlsRef = ref;
-  const cameraHeight = height;
-
-  const { camera } = useThree();
-
   useFrame(() => {
-    if (controlsRef.current) {
-      const controls = controlsRef.current;
+    if (ref.current) {
+      const controls = ref.current;
       const camera = controls.object;
 
       // Фиксируем высоту камеры
-      camera.position.y = cameraHeight;
+      camera.position.y = height;
 
       // Ограничиваем движение по вертикали (minPolarAngle и maxPolarAngle)
       controls.minPolarAngle = 0.1; // Не смотреть под ноги (0 = горизонтально)

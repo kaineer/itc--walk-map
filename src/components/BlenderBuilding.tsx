@@ -1,17 +1,17 @@
 import { useGLTF } from "@react-three/drei";
 
-type Point = {
+interface Point {
   x: number;
   z: number;
 }
 
-type BuildingProps = {
+interface Props {
   point: Point;
   modelPath: string;
   scale?: number;
 }
 
-export const BlenderBuilding = ({ modelPath, point, scale = 1 }: BuildingProps) => {
+export const BlenderBuilding = ({ modelPath, point, scale = 1 }: Props) => {
   const { scene } = useGLTF(modelPath);
 
   return (

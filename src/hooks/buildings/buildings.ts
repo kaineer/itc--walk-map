@@ -11,6 +11,7 @@ export interface Node {
 }
 
 export interface Building {
+  id: string;
   height: number;
   nodes: Node[];
   tags: Tags;
@@ -93,7 +94,6 @@ const getBuildingHeight = (tags: Tags): number => {
 }
 
 const getBuildingNodes = (el: Element, nodes: NodeHash): Node[] => {
-  // TODO: Get nd refs
   const refElements = el.getElementsByTagName("nd");
   const angles: Node[] = [];
   [...refElements].forEach((nd) => {
@@ -116,6 +116,7 @@ export const getBuildingsFrom = (xmlDoc: XMLDocument, nodes: NodeHash): Building
     const tags = getTags(el);
     if (tags.building) {
       buildings.push({
+        id: el.getAttribute('id') || '',
         height: getBuildingHeight(tags),
         nodes: getBuildingNodes(el, nodes),
         tags,

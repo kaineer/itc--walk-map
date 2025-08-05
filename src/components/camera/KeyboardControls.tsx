@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 import * as THREE from 'three';
 
 interface Props {
-  ref: RefObject<any>;
+  ref: RefObject<OrbitControls>;
 }
 
 export const KeyboardControls = ({ ref }: Props) => {

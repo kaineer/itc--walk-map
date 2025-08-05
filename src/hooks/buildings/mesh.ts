@@ -17,20 +17,13 @@ export const getVertices = (building: Building): Float32Array => {
   return new Float32Array(vertices);
 }
 
+// В итоге решили, что без верхней и нижней крышек
+//   можно обойтись
 export const getIndices = (building: Building): Uint16Array => {
   const vertexCount = building.nodes.length;
   const indices: number[] = [];
 
-  // // Триангуляция передней грани (ear clipping для сложных полигонов)
-  // const frontIndices = earClipping(building.nodes);
-  // //
-  // // Триангуляция задней грани (обратный порядок)
-  // // const backIndices = earClipping(building.nodes);
   const backOffset = vertexCount;
-  // indices.push(
-  //   ...frontIndices,
-  //   ...frontIndices.map((idx) => idx + backOffset),
-  // );
 
   // Боковые грани (квады → треугольники)
   for (let i = 0; i < vertexCount; i++) {
@@ -38,36 +31,6 @@ export const getIndices = (building: Building): Uint16Array => {
     indices.push(
       i, next, backOffset + i,
       next, backOffset + next, backOffset + i
-    );
-  }
-
-  return new Uint16Array(indices);
-}
-
-// Get indices attribute
-//
-export const getSimpleIndices = (building: Building): Uint16Array => {
-  const indices: number[] = [];
-
-  const vertexCount = building.nodes.length;
-
-  // Индексы передней грани (заполняем треугольниками)
-  for (let i = 2; i < vertexCount; i++) {
-    indices.push(0, i - 1, i);
-  }
-
-  // Индексы задней грани (обратный порядок)
-  const backFaceOffset = vertexCount;
-  for (let i = 2; i < vertexCount; i++) {
-    indices.push(backFaceOffset, backFaceOffset + i - 1, backFaceOffset + i);
-  }
-
-  // Боковые грани (квады разбиваем на два треугольника)
-  for (let i = 0; i < vertexCount; i++) {
-    const next = (i + 1) % vertexCount;
-    indices.push(
-      i, next, backFaceOffset + i,
-      next, backFaceOffset + next, backFaceOffset + i
     );
   }
 

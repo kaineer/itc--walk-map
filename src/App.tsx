@@ -38,11 +38,13 @@ function App() {
   //
 
   const floorColor = "#ffffe5";
-  const ref = useRef<any>(null);
+  const ref = useRef<OrbitControls | null>(null);
+
+  const fixedHeight = 1.8;
 
   const mv = middle ?
     // new THREE.Vector3(middle.x, 0, middle.z) :
-    new THREE.Vector3(1057, 1.8, 648) :
+    new THREE.Vector3(1057, fixedHeight, 648) :
     new THREE.Vector3(0, 0, 0);
   const mx = mv.x;
   const mz = mv.z;
@@ -54,7 +56,7 @@ function App() {
   return (
     <Provider store={setupStore()}>
       <div id="canvas-container">
-        <Canvas camera={{ position: [823, 1.8, 895] }}>
+        <Canvas camera={{ position: [823, fixedHeight, 895] }}>
           <ambientLight intensity={0.99} />
           <directionalLight color="white" position={[0, 0, 5]} />
           { buildings.map(makeBuilding) }
@@ -64,18 +66,17 @@ function App() {
             scale={1}
           />
           <mesh position={[mx, 0, mz]} rotation={[-Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[100000, 100000]} /> {/* Размер 100x100 метров */}
+            <planeGeometry args={[100000, 100000]} />
             <meshStandardMaterial color={ floorColor } side={2} />
           </mesh>
 
           <OrbitControls
-            position={[823, 1.8, 895]}
-            target={[824, 1.8, 895]}
+            target={[824, fixedHeight, 895]}
             ref={ref}>
-            <FixedHeightCamera ref={ref} height={1.8} />
+            <FixedHeightCamera ref={ref} height={fixedHeight} />
             <KeyboardControls ref={ref} />
             <StorePresetControls ref={ref} />
-            <FollowCurrentPreset ref={ref} />
+            <FollowCurrentPreset ref={ref} height={fixedHeight} />
           </OrbitControls>
         </Canvas>
         <Popup />
