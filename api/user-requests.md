@@ -41,6 +41,7 @@
 {
   name: "Vasilii Pupkin",
   login: 'pupkinv',
+  password: 'password',
   phone: "+790000000",
   schoolName: 'it college',
   role: 'admin',
