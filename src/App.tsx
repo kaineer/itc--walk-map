@@ -10,12 +10,12 @@ import { BlenderBuilding } from './components/BlenderBuilding';
 import { Popup } from './components/Popup';
 import { setupStore } from './store';
 import { Provider } from 'react-redux';
-import { CameraPositionLogger } from './components/camera/CameraPositionLogger';
 import { useRef } from 'react';
 import { FixedHeightCamera } from './components/camera/FixedHeightCamera';
 import { KeyboardControls } from './components/camera/KeyboardControls';
 import { StorePresetControls } from './components/camera/StorePresetControls';
 import { FollowCurrentPreset } from './components/camera/FollowCurrentPreset';
+import { type Building as BuildingData } from './hooks/buildings/buildings';
 
 function App() {
   const { buildings, middle } = useBuildings();
@@ -38,7 +38,7 @@ function App() {
   //
 
   const floorColor = "#ffffe5";
-  const ref = useRef<OrbitControls | null>(null);
+  const ref = useRef<typeof OrbitControls | null>(null);
 
   const fixedHeight = 1.8;
 
@@ -49,7 +49,7 @@ function App() {
   const mx = mv.x;
   const mz = mv.z;
 
-  const makeBuilding = (building: Building, id: number) => (
+  const makeBuilding = (building: BuildingData, id: number) => (
     <Building key={ id } building={ building } />
   );
 
